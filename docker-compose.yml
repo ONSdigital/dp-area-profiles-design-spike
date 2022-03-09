@@ -1,0 +1,13 @@
+version: '3.3'
+services:
+  postgres:
+    image: postgres:latest
+    environment: 
+     - POSTGRES_USER=${POSTRES_USER}
+     - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+    ports:
+     - "5432:5432"
+
+
+
+
