@@ -69,7 +69,7 @@ func run() error {
 		return err
 	}
 
-	log.Info("api ready to receive requests")
+	log.Info("api ready to receive requests port :8080")
 	if err := http.ListenAndServe(":8080", r); err != nil {
 		return errors.Wrap(err, "errot shutting down http server")
 	}
