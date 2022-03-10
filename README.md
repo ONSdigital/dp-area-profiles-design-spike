@@ -123,21 +123,21 @@ Running `make run` will start the API retaining the current database state.
   curl -XGET "http://localhost:8080/profiles/E05011362/versions/1000"
   ````
   Response:
-```json
-[
-  {
-    "version_id": 1000,
-    "id": 1000,
-    "profile_id": 1000,
-    "name": "Average (mean) age",
-    "value": "29",
-    "unit": "",
-    "date_created": "2022-03-09T16:23:04.02231Z",
-    "last_modified": "2022-03-09T16:23:44.52323Z"
-  },
-  ...
-  ...
-  ...
-]
+  ```json
+  [
+    {
+      "version_id": 1000,
+      "id": 1000,
+      "profile_id": 1000,
+      "name": "Average (mean) age",
+      "value": "29",
+      "unit": "",
+      "date_created": "2022-03-09T16:23:04.02231Z",
+      "last_modified": "2022-03-09T16:23:44.52323Z"
+    },
+    ...
+    ...
+    ...
+  ]
 ```
 
