@@ -20,6 +20,14 @@ type Area struct {
 	Name string `json:"name,omitempty"`
 }
 
+// AreaProfileLink is a model encapsulating details to link to an area profile
+type AreaProfileLink struct {
+	ProfileID int    `json:"profile_id"`
+	Name      string `json:"name"`
+	AreaCode  string `json:"area_code"`
+	Href      string `json:"href"`
+}
+
 // AreaProfile is a domain representation of a geographical area profile.
 type AreaProfile struct {
 	ID       int            `json:"id"`

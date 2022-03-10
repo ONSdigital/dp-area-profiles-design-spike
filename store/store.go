@@ -20,6 +20,7 @@ var (
 type Store interface {
 	Init(areaCode, areaName, areaProfileName string) error
 	Close() error
+	GetProfiles() ([]*models.AreaProfileLink, error)
 	GetProfileByAreaCode(areaCode string) (*models.AreaProfile, error)
 	GetKeyStatsByProfileID(profileID int) ([]models.KeyStatistic, error)
 	UpdateProfileKeyStats(profileID int, newStats []models.ImportRow) error
@@ -96,6 +97,43 @@ func (s *areaProfileStore) Init(areaCode, areaName, areaProfileName string) erro
 	}
 	log.Info("database initialisation compeleted successfully :pizza:")
 	return nil
+}
+
+// GetProfiles return an array of existing area profiles.
+func (s *areaProfileStore) GetProfiles() ([]*models.AreaProfileLink, error) {
+	profiles := make([]*models.AreaProfileLink, 0)
+
+	rows, err := s.conn.Query(context.Background(), getProfilesSQL)
+	if err != nil {
+		return nil, err
+	}
+
+	defer rows.Close()
+
+	for rows.Next() {
+		var (
+			profileID int
+			areaCode  string
+			name      string
+		)
+
+		if err := rows.Scan(&profileID, &areaCode, &name); err != nil {
+			return nil, err
+		}
+
+		profiles = append(profiles, &models.AreaProfileLink{
+			ProfileID: profileID,
+			AreaCode:  areaCode,
+			Name:      name,
+			Href:      fmt.Sprintf("http://localhost:8080/profiles/%s", areaCode),
+		})
+	}
+
+	if rows.Err() != nil {
+		return nil, rows.Err()
+	}
+
+	return profiles, nil
 }
 
 // NewArea insert a new area, returns the area code.

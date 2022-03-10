@@ -14,12 +14,29 @@ import (
 //
 func Initialise(s store.Store) (*mux.Router, error) {
 	r := mux.NewRouter()
-	r.Path("/profile/{area_code}").Methods(http.MethodGet).HandlerFunc(GetAreaProfileHandlerFunc(s))
-	r.Path("/profile/{area_code}").Methods(http.MethodPut).HandlerFunc(AddNewKeyStatsVersion(s))
-	r.Path("/profile/{area_code}/versions").Methods(http.MethodGet).HandlerFunc(GetKeyStatVersionsHandlerFunc(s))
-	r.Path("/profile/{area_code}/versions/{version_id}").Methods(http.MethodGet).HandlerFunc(GetKeyStatVersionHandlerFunc(s))
+	r.Path("/profiles").Methods(http.MethodGet).HandlerFunc(GetAreaProfilesHandlerFunc(s))
+	r.Path("/profiles/{area_code}").Methods(http.MethodGet).HandlerFunc(GetAreaProfileHandlerFunc(s))
+	r.Path("/profiles/{area_code}").Methods(http.MethodPut).HandlerFunc(AddNewKeyStatsVersion(s))
+	r.Path("/profiles/{area_code}/versions").Methods(http.MethodGet).HandlerFunc(GetKeyStatVersionsHandlerFunc(s))
+	r.Path("/profiles/{area_code}/versions/{version_id}").Methods(http.MethodGet).HandlerFunc(GetKeyStatVersionHandlerFunc(s))
 
 	return r, nil
+}
+
+// GetAreaProfilesHandlerFunc http.HandlerFun returns a list available area profiles.
+func GetAreaProfilesHandlerFunc(profilesStore store.Store) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		profiles, err := profilesStore.GetProfiles()
+		if err != nil {
+			log.Err("GetAreaPorfilesHandler error %+v", err)
+			http.Error(w, fmt.Sprintf("internal server error: %s", err.Error()), http.StatusInternalServerError)
+		}
+
+		if err := writeEntity(w, profiles, http.StatusOK); err != nil {
+			log.Err("GetAreaProfileHandler error %+v", err)
+			http.Error(w, fmt.Sprintf("internal server error: %s", err.Error()), http.StatusInternalServerError)
+		}
+	}
 }
 
 // GetAreaProfileHandlerFunc http.HandlerFunc returns the area profile for the specified area code.

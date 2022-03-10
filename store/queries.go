@@ -59,6 +59,9 @@ var (
 
 // Queries
 var (
+	// getProfilesSQL SQL query returning all area profiles.
+	getProfilesSQL = "SELECT profile_id, area_code, name FROM area_profiles"
+
 	// getProfileByAreaCodeSQL SQL query returns the area profile for the specified area code.
 	getProfileByAreaCodeSQL = "SELECT profile_id, name, area_code FROM area_profiles WHERE area_code = $1;"
 
