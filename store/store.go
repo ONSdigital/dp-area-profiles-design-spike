@@ -96,7 +96,7 @@ func (s *areaProfileStore) Init(areaCode, areaName, areaProfileName string) erro
 		return err
 	}
 
-	stats, err := testdata.ReadCVS("testdata/ex3.csv")
+	stats, err := testdata.ReadCVS("testdata/ex1.csv")
 	if err != nil {
 		return err
 	}

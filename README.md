@@ -75,13 +75,19 @@ Running `make run` will start the API retaining the current database state.
     "area_code": "E05011362",
     "key_stats": [
       {
-        "id": 1200,
+        "id": 1000,
         "profile_id": 1000,
-        "name": "Average (mean) age",
-        "value": "29",
+        "name": "Resident population",
+        "value": "503,127",
         "unit": "",
-        "date_created": "2022-03-09T16:35:58.664157Z",
-        "last_modified": "0001-01-01T00:00:00Z"
+        "date_created": "2022-03-18T14:35:13.08028Z",
+        "last_modified": "0001-01-01T00:00:00Z",
+        "metadata": {
+          "id": 1000,
+          "dataset_id": "abc123",
+          "dataset_name": "Test dataset 1",
+          "href": "http://localhost:666/datasets/abc123/test_dataset_1"
+        }
       },
       ...
     ]
@@ -89,13 +95,21 @@ Running `make run` will start the API retaining the current database state.
   ```
 
 - **Add a new version** of key statistics to an area profile. When a new verison is added the "current"
-  key stats values are copied into a version history table and then key stats table is updated with the latest values.  
-  In this poc making a PUT request to this endpoint will reimport the same data again __i.e.__ all versions of the data
-  will be identical. In the real world these will be different and all or some values could be updated at different times
-  but here this fucntionality is intended to serve as an illustration onhow versioning the data can be achieved
-  using a version history table.
-  ```shell
-  curl -XPUT "http://localhost:8080/profiles/E05011362"
+  key stats values are copied into a version history table and then key stats table is updated with the latest 
+  values. There are 2 example files which can be imported using the PUT endpoint 
+  `"http://localhost:8080/profiles/E05011362/{file}"` where `{file}` is `ex1` or `ex2`. Making a PUT request to this 
+  endpoint will version the current data and import data from the file specified. This fucntionality is intended to 
+  serve as an illustration of how versioning the data can be achieved using a version history table.
+    ```shell
+    curl -XPUT "http://localhost:8080/profiles/E05011362/ex1"
+    ```
+  Response:
+  ```json
+  {
+    "href": "http://localhost:8080/profiles/E05011362",
+    "message": "new profile key stats version created successfully",
+    "versions": "http://localhost:8080/profiles/E05011362/versions"
+  }
   ```
 
 - Get a list of versions of an area profile (the default state has no previous versions - you will need to add one 
@@ -122,22 +136,26 @@ Running `make run` will start the API retaining the current database state.
   ````shell
   curl -XGET "http://localhost:8080/profiles/E05011362/versions/1000"
   ````
-  Response:
+  Response: 
   ```json
   [
     {
       "version_id": 1000,
       "id": 1000,
       "profile_id": 1000,
-      "name": "Average (mean) age",
-      "value": "29",
+      "name": "Resident population",
+      "value": "503,127",
       "unit": "",
-      "date_created": "2022-03-09T16:23:04.02231Z",
-      "last_modified": "2022-03-09T16:23:44.52323Z"
+      "date_created": "2022-03-18T14:35:13.08028Z",
+      "last_modified": "2022-03-18T14:37:20.22604Z",
+      "metadata": {
+        "id": 1000,
+        "dataset_id": "abc123",
+        "dataset_name": "Test dataset 1",
+        "href": "http://localhost:666/datasets/abc123/test_dataset_1"
+      }
     },
     ...
-    ...
-    ...
   ]
-```
+  ```
 
