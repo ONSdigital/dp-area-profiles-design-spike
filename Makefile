@@ -4,17 +4,17 @@ DATABASE_NAME=area_profiles
 
 .PHONY: build
 build:
-	go build -o api
+	go build -o poc
 
 ## Start the API and drop any existing data/tables and recreate the schema.
 .PHONY: fresh
 fresh: build
-	./api -u=${POSTGRES_USER} -p=${POSTGRES_PASSWORD} -db=${DATABASE_NAME} -drop=true
+	./poc -u=${POSTGRES_USER} -p=${POSTGRES_PASSWORD} -db=${DATABASE_NAME} -drop=true
 
 ## Start the API retaining the current database state.
 .PHONY: run
 run: build
-	./api -u=${POSTGRES_USER} -p=${POSTGRES_PASSWORD} -db=${DATABASE_NAME} -drop=false
+	./poc -u=${POSTGRES_USER} -p=${POSTGRES_PASSWORD} -db=${DATABASE_NAME} -drop=false
 
 ## Runs a Postgres Docker container for the app to connect to.
 .PHONY: compose

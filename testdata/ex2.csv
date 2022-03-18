@@ -1,0 +1,7 @@
+AreaCode,Title,Name,Value,Unit,Dataset ID,Dataset Name
+E05011362,"Resident Population for Disbury East, Census 2021",Resident population,"603,127",,abc123,test dataset 1
+E05011362,"Resident Population for Disbury East, Census 2021",Population density (Hectares),"53.5",,efg789,test dataset 2
+E05011362,"Resident Population for Disbury East, Census 2021",Average (mean) age,"39",,abc123,test dataset 1
+E05011362,"Resident Population for Disbury East, Census 2021",People think their general health is good,"51.7",%,efg789,test dataset 2
+E05011362,"Resident Population for Disbury East, Census 2021",Households where English is not the main language,"20.3",%,abc123,test dataset 1
+E05011362,"Resident Population for Disbury East, Census 2021","Households owned with a mortgage, loan or shared ownership","32.6",%,xxx666,test dataset 3

@@ -39,11 +39,13 @@ func ReadCVS(file string) ([]models.ImportRow, error) {
 		}
 
 		stats = append(stats, models.ImportRow{
-			AreaCode: row[0],
-			Title:    row[1],
-			Name:     row[2],
-			Value:    row[3],
-			Unit:     row[4],
+			AreaCode:    row[0],
+			Title:       row[1],
+			Name:        row[2],
+			Value:       row[3],
+			Unit:        row[4],
+			DatasetID:   row[5],
+			DatasetName: row[6],
 		})
 	}
 
