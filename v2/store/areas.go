@@ -14,7 +14,7 @@ var (
 )
 
 // NewArea insert a new area, returns the area code.
-func (s *areaProfileStore) AddArea(code, name string) (string, error) {
+func (s *AreaProfileStore) AddArea(code, name string) (string, error) {
 	var areaCode string
 	err := s.conn.QueryRow(context.Background(), insertAreaSQL, code, name).Scan(&areaCode)
 	if err != nil {
