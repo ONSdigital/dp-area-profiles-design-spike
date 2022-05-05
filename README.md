@@ -95,7 +95,7 @@ Run the API (http://localhost:8080/profiles)
     [
       {
         "id": 1100,
-        "profile_id": 1000,
+        "area_code": "E05011362",
         "name": "Population density (Hectares)",
         "value": "1",
         "unit": "",
@@ -110,7 +110,7 @@ Run the API (http://localhost:8080/profiles)
       ...
       {
         "id": 1000,
-        "profile_id": 1000,
+        "area_code": "E05011362",
         "name": "Resident population",
         "value": "2",
         "unit": "",
@@ -146,7 +146,7 @@ Run the API (http://localhost:8080/profiles)
   [
     {
       "id": 1100,
-      "profile_id": 1000,
+      "area_code": "E05011362",
       "name": "Population density (Hectares)",
       "value": "1",
       "unit": "",
@@ -161,7 +161,7 @@ Run the API (http://localhost:8080/profiles)
     ...
     {
       "id": 1000,
-      "profile_id": 1000,
+      "area_code": "E05011362",
       "name": "Resident population",
       "value": "1",
       "unit": "",

@@ -12,9 +12,9 @@ import (
 type DB interface {
 	GetAreaProfiles() ([]store.AreaProfile, error)
 	GetProfileByAreaCode(areaCode string) (*store.AreaProfile, error)
-	GetKeyStatsForProfile(profileID int) (store.KeyStatistics, error)
-	GetKeyStatsVersionsForProfile(profileID int) ([]time.Time, error)
-	GetKeyStatsVersion(profileID int, date string) (store.KeyStatistics, error)
+	GetKeyStatsForProfile(profile *store.AreaProfile) (store.KeyStatistics, error)
+	GetKeyStatsVersionsForProfile(profile *store.AreaProfile) ([]time.Time, error)
+	GetKeyStatsVersion(profile *store.AreaProfile, date string) (store.KeyStatistics, error)
 }
 
 // Initalise registers the API handler functions.

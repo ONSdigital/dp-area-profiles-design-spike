@@ -44,13 +44,13 @@ func (s *AreaProfileStore) InsertKeyStat(areaCode, name, value, unit, datasetID,
 }
 
 // GetKeyStatsForProfile returns a list of the current Key stats associated with the specified area profile.
-func (s *AreaProfileStore) GetKeyStatsForProfile(profileID int) (KeyStatistics, error) {
-	rows, err := s.conn.Query(context.Background(), getStatsByProfileIDSQL, profileID)
+func (s *AreaProfileStore) GetKeyStatsForProfile(profile *AreaProfile) (KeyStatistics, error) {
+	rows, err := s.conn.Query(context.Background(), getStatsByProfileIDSQL, profile.ID)
 	if err != nil {
 		return nil, err
 	}
 
-	stats, err := keyStatisticsRowsMapper(rows)
+	stats, err := keyStatisticsRowsMapper(profile, rows)
 	if err != nil {
 		return nil, errors.Wrap(err, "error mapping result rows to keystatistics")
 	}

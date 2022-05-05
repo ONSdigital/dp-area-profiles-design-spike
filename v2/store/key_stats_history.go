@@ -25,8 +25,8 @@ var (
 )
 
 // GetKeyStatsVersionsForProfile list all versions of the key stats for this area profile
-func (s *AreaProfileStore) GetKeyStatsVersionsForProfile(profileID int) ([]time.Time, error) {
-	rows, err := s.conn.Query(context.Background(), listVersionsSQL, profileID)
+func (s *AreaProfileStore) GetKeyStatsVersionsForProfile(profile *AreaProfile) ([]time.Time, error) {
+	rows, err := s.conn.Query(context.Background(), listVersionsSQL, profile.ID)
 	if err != nil {
 		return nil, err
 	}
@@ -42,15 +42,15 @@ func (s *AreaProfileStore) GetKeyStatsVersionsForProfile(profileID int) ([]time.
 }
 
 // GetKeyStatsVersion returns a list of key stats belonging to the specified version of the area profile.
-func (s *AreaProfileStore) GetKeyStatsVersion(profileID int, date string) (KeyStatistics, error) {
-	rows, err := s.conn.Query(context.Background(), getKeyStatsVersionSQL, profileID, date)
+func (s *AreaProfileStore) GetKeyStatsVersion(profile *AreaProfile, date string) (KeyStatistics, error) {
+	rows, err := s.conn.Query(context.Background(), getKeyStatsVersionSQL, profile.ID, date)
 	if err != nil {
 		return nil, err
 	}
 
 	defer rows.Close()
 
-	stats, err := keyStatisticsRowsMapper(rows)
+	stats, err := keyStatisticsRowsMapper(profile, rows)
 	if err != nil {
 		return nil, errors.Wrap(err, "error mapping stats version result rows")
 	}

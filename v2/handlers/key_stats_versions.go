@@ -29,7 +29,7 @@ func GetStatsVersionsHandlerFunc(db DB) http.HandlerFunc {
 			http.Error(w, "internal server error", http.StatusInternalServerError)
 		}
 
-		versionsList, err := db.GetKeyStatsVersionsForProfile(profile.ID)
+		versionsList, err := db.GetKeyStatsVersionsForProfile(profile)
 		if err != nil {
 			log.Err("error querying for profile stats versions: %s", err.Error())
 			http.Error(w, "internal server error", http.StatusInternalServerError)
@@ -75,7 +75,7 @@ func GetStatsVersionHandlerFunc(db DB) http.HandlerFunc {
 			http.Error(w, "internal server error", http.StatusInternalServerError)
 		}
 
-		stats, err := db.GetKeyStatsVersion(profile.ID, version)
+		stats, err := db.GetKeyStatsVersion(profile, version)
 		if err != nil {
 			log.Err("error querying for stats version: %s", err.Error())
 			http.Error(w, "internal server error", http.StatusInternalServerError)

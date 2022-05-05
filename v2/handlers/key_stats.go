@@ -29,7 +29,7 @@ func GetProfileStatsHandlerFunc(db DB) http.HandlerFunc {
 			http.Error(w, "internal server error", http.StatusInternalServerError)
 		}
 
-		stats, err := db.GetKeyStatsForProfile(profile.ID)
+		stats, err := db.GetKeyStatsForProfile(profile)
 		if err != nil {
 			log.Err("error querying for profile stats: %s", err.Error())
 			http.Error(w, "internal server error", http.StatusInternalServerError)

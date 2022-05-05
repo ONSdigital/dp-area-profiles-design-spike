@@ -40,11 +40,11 @@ func mapRowsToAreaProfile(rows pgx.Rows) (AreaProfile, error) {
 }
 
 // keyStatisticsRowsMapper maps postgres result rows to a list of KeyStatistics
-func keyStatisticsRowsMapper(rows pgx.Rows) (KeyStatistics, error) {
+func keyStatisticsRowsMapper(p *AreaProfile, rows pgx.Rows) (KeyStatistics, error) {
 	stats := make(KeyStatistics, 0)
 
 	for rows.Next() {
-		s, err := mapRowsToKeyStats(rows)
+		s, err := mapRowsToKeyStats(p, rows)
 		if err != nil {
 			return nil, err
 		}
@@ -59,8 +59,8 @@ func keyStatisticsRowsMapper(rows pgx.Rows) (KeyStatistics, error) {
 	return stats, nil
 }
 
-func mapRowsToKeyStats(rows pgx.Rows) (KeyStatistic, error) {
-	s := KeyStatistic{}
+func mapRowsToKeyStats(p *AreaProfile, rows pgx.Rows) (KeyStatistic, error) {
+	s := KeyStatistic{AreaCode: p.AreaCode}
 
 	if err := rows.Scan(&s.ProfileID, &s.StatID, &s.Name, &s.Value, &s.Unit, &s.DateCreated, &s.Metadata.DatasetID, &s.Metadata.DatasetName); err != nil {
 		return s, err

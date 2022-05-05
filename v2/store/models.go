@@ -18,7 +18,8 @@ type KeyStatistics []KeyStatistic
 type KeyStatistic struct {
 	VersionID    int                  `json:"version_id,,omitempty"`
 	StatID       int                  `json:"id"`
-	ProfileID    int                  `json:"profile_id"`
+	ProfileID    int                  `json:"-"`
+	AreaCode     string               `json:"area_code"`
 	Name         string               `json:"name"`
 	Value        string               `json:"value"`
 	Unit         string               `json:"unit"`
