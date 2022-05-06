@@ -62,7 +62,7 @@ func keyStatisticsRowsMapper(p *AreaProfile, rows pgx.Rows) (KeyStatistics, erro
 func mapRowsToKeyStats(p *AreaProfile, rows pgx.Rows) (KeyStatistic, error) {
 	s := KeyStatistic{AreaCode: p.AreaCode}
 
-	if err := rows.Scan(&s.ProfileID, &s.StatID, &s.Name, &s.Value, &s.Unit, &s.DateCreated, &s.Metadata.DatasetID, &s.Metadata.DatasetName); err != nil {
+	if err := rows.Scan(&s.ProfileID, &s.StatID, &s.StatType, &s.Name, &s.Value, &s.Unit, &s.DateCreated, &s.Metadata.DatasetID, &s.Metadata.DatasetName); err != nil {
 		return s, err
 	}
 
@@ -74,7 +74,7 @@ func mapRowsToKeyStats(p *AreaProfile, rows pgx.Rows) (KeyStatistic, error) {
 func mapRowToKeyStat(row pgx.Row) (KeyStatistic, error) {
 	s := KeyStatistic{}
 
-	if err := row.Scan(&s.ProfileID, &s.StatID, &s.Name, &s.Value, &s.Unit, &s.DateCreated, &s.Metadata.DatasetID, &s.Metadata.DatasetName); err != nil {
+	if err := row.Scan(&s.ProfileID, &s.StatID, &s.StatType, &s.Name, &s.Value, &s.Unit, &s.DateCreated, &s.Metadata.DatasetID, &s.Metadata.DatasetName); err != nil {
 		return s, err
 	}
 

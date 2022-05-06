@@ -20,6 +20,34 @@ CREATE TABLE IF NOT EXISTS area_profiles (
 CREATE SEQUENCE area_profile_id START 1000 INCREMENT 100 MINVALUE 1000 OWNED BY area_profiles.profile_id;
 
 
+-- Create key statistic type table
+CREATE TABLE IF NOT EXISTS key_stat_types (
+    type_id INT PRIMARY KEY NOT NULL, 
+    name VARCHAR(100) NOT NULL,  
+    UNIQUE (name)
+);
+
+
+-- Create key statistics table
+CREATE TABLE IF NOT EXISTS key_stats (
+    stat_id INT PRIMARY KEY NOT NULL, 
+    profile_id INT NOT NULL,
+    stat_type INT NOT NULL, 
+    value VARCHAR(100) NOT NULL, 
+    unit VARCHAR(25) NOT NULL, 
+    date_created TIMESTAMP NOT NULL, 
+    dataset_id VARCHAR(100) NOT NULL, 
+    dataset_name VARCHAR(100) NOT NULL, 
+    UNIQUE (profile_id, stat_type), 
+    CONSTRAINT fk_profile_id 
+        FOREIGN KEY (profile_id) REFERENCES area_profiles (profile_id),
+    CONSTRAINT fk_stat_type 
+        FOREIGN KEY (stat_type) REFERENCES key_stat_types (type_id) 
+);
+
+
+
+
 -- Create key statistics table
 CREATE TABLE IF NOT EXISTS key_stats (
     stat_id INT PRIMARY KEY NOT NULL, 

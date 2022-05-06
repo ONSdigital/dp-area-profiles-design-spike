@@ -4,6 +4,12 @@ import (
 	"time"
 )
 
+// KetStatType provides a unique identity of each type of key stat value.
+type KeyStatType struct {
+	ID   int    `json:"id"`
+	Name string `json:"name"`
+}
+
 // AreaProfile is a domain representation of a geographical area profile.
 type AreaProfile struct {
 	ID       int    `json:"id"`
@@ -18,6 +24,7 @@ type KeyStatistics []KeyStatistic
 type KeyStatistic struct {
 	VersionID    int                  `json:"version_id,,omitempty"`
 	StatID       int                  `json:"id"`
+	StatType     int                  `json:"stat_type"`
 	ProfileID    int                  `json:"-"`
 	AreaCode     string               `json:"area_code"`
 	Name         string               `json:"name"`

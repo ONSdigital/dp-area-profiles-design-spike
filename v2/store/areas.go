@@ -7,10 +7,21 @@ import (
 
 var (
 	// createAreasTableSQL is an SQL statement to create the areas table
-	createAreasTableSQL = "CREATE TABLE IF NOT EXISTS areas (code VARCHAR (50) PRIMARY KEY NOT NULL, name VARCHAR (100) NOT NULL);"
+	createAreasTableSQL = `
+		CREATE TABLE IF NOT EXISTS areas (
+			code VARCHAR (50) PRIMARY KEY NOT NULL,
+			name VARCHAR (100) NOT NULL
+		);
+	`
 
 	// insertAreaSQL is an SQL query to insert a new area - requires area code and name.
-	insertAreaSQL = "INSERT INTO areas (code, name) VALUES ($1, $2) RETURNING code;"
+	insertAreaSQL = `
+		INSERT INTO areas 
+			(code, name)
+		VALUES
+			($1, $2) 
+		RETURNING code;
+	`
 )
 
 // NewArea insert a new area, returns the area code.

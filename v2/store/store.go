@@ -11,15 +11,21 @@ import (
 var (
 	// ErrNotFound is an error to represent the state where the requested record does not exist.
 	ErrNotFound = errors.New("no rows exist matching your query parameters")
-)
 
-// Drop sequences/tables.
-var (
 	// dropSequencesSQL is an SQL statement to drop the sequences created by this demo.
-	dropSequencesSQL = "DROP SEQUENCE IF EXISTS area_profile_id, key_stats_id, key_stats_history_id, key_stat_version_id"
+	dropSequencesSQL = "DROP SEQUENCE IF EXISTS area_profile_id, key_stats_id, key_stats_history_id, key_stat_version_id, key_stat_type_id"
 
 	// dropTablesSQL is an SQL statement to drop all tables created by this demo.
-	dropTablesSQL = "DROP TABLE IF EXISTS key_stats_history, key_stats, area_profiles, areas CASCADE;"
+	dropTablesSQL = "DROP TABLE IF EXISTS key_stats_history, key_stats, key_stat_types, area_profiles, areas CASCADE;"
+
+	statTypes = []string{
+		"Resident population",
+		"Population density (Hectares)",
+		"Average (mean) age",
+		"People think their general health is good",
+		"Households where English is not the main language",
+		"Households owned with a mortgage, loan or shared ownership",
+	}
 )
 
 // Store represents the area profiles data store.
@@ -62,6 +68,8 @@ func (s *AreaProfileStore) Init(areaCode, areaName, areaProfileName string) erro
 		createAreasTableSQL,
 		createProfilesTableSQL,
 		createAreaProfileIDSeqSQL,
+		createKeyStatTypeSQL,
+		createKeyStatTypeSeqSQL,
 		createKeyStatsTableSQL,
 		createKeyStatsIDSeqSQL,
 		createKeyStatsHistoryTableSQL,
@@ -80,6 +88,11 @@ func (s *AreaProfileStore) Init(areaCode, areaName, areaProfileName string) erro
 
 	log.Info("adding area profile test data, name=%s", areaProfileName)
 	_, err := s.AddAreaProfile(areaCode, areaProfileName)
+	if err != nil {
+		return err
+	}
+
+	err = s.InsertKeyStatTypes(statTypes...)
 	if err != nil {
 		return err
 	}

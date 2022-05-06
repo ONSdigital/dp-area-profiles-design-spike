@@ -9,19 +9,57 @@ import (
 
 var (
 	// createProfilesTableSQL is an SQL statement to create the area profiles table
-	createProfilesTableSQL = "CREATE TABLE area_profiles (profile_id INT PRIMARY KEY NOT NULL, area_code VARCHAR(50) NOT NULL, name VARCHAR (100) NOT NULL, UNIQUE (area_code), CONSTRAINT fk_area_code FOREIGN KEY (area_code) REFERENCES areas (code));"
+	createProfilesTableSQL = `
+		CREATE TABLE area_profiles (
+			profile_id INT PRIMARY KEY NOT NULL, 
+			area_code VARCHAR(50) NOT NULL, 
+			name VARCHAR (100) NOT NULL, 
+			UNIQUE (area_code), 
+			CONSTRAINT fk_area_code 
+				FOREIGN KEY (area_code) REFERENCES areas (code)
+		);
+	`
 
 	//createAreaProfileIDSeqSQL is a SQL statement creating a sequence for generating area profile ids.
-	createAreaProfileIDSeqSQL = "CREATE SEQUENCE area_profile_id START 1000 INCREMENT 100 MINVALUE 1000 OWNED BY area_profiles.profile_id;"
+	createAreaProfileIDSeqSQL = `
+		CREATE SEQUENCE 
+			area_profile_id 
+		START 
+			1000 
+		INCREMENT 
+			100 
+		MINVALUE 
+			1000 
+		OWNED BY 
+			area_profiles.profile_id;
+	`
 
 	// getProfileByAreaCodeSQL SQL query returns the area profile for the specified area code.
-	getProfileByAreaCodeSQL = "SELECT profile_id, name, area_code FROM area_profiles WHERE area_code = $1;"
+	getProfileByAreaCodeSQL = `
+		SELECT 
+			profile_id, name, area_code 
+		FROM
+			area_profiles 
+		WHERE 
+			area_code = $1;
+	`
 
 	// getAreaProfilesSQL SQL query returning a list of all area profiles.
-	getAreaProfilesSQL = "SELECT profile_id, name, area_code FROM area_profiles;"
+	getAreaProfilesSQL = `
+		SELECT 
+			profile_id, name, area_code 
+		FROM 
+			area_profiles;
+	`
 
 	// insertProfileSQL is an SQL query to insert a new area profile, required area code and profile name.
-	insertProfileSQL = "INSERT INTO area_profiles (profile_id, area_code, name) VALUES (nextval('area_profile_id'), $1, $2) RETURNING profile_id;"
+	insertProfileSQL = `
+		INSERT INTO area_profiles 
+			(profile_id, area_code, name) 
+		VALUES 
+			(nextval('area_profile_id'), $1, $2) 
+		RETURNING profile_id;
+	`
 )
 
 // NewAreaProfile insert a new area profile returns the area profile ID.
