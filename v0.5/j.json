@@ -1,0 +1,13 @@
+{
+    "id": 1234,
+    "dataset_id": "test dataset 1",
+    "dataset_edition": "2022",
+    "query": "select * from some_table where geography_type = $1;",
+    "stat_type": {
+        "type_id": 1,
+        "name": "Resident Population"
+    },
+    "geographies": [
+        "lower output area"
+    ]
+}

@@ -46,3 +46,29 @@ type KeyStatisticVersions struct {
 	AreaProfile
 	Versions []time.Time `json:"versions"`
 }
+
+// KeyStatsRecipe is a type encapslating the import job for a new dataset version notification.
+// It specifies what Cantabular query to run, which geographies it affected too and which key stat type the query results represent.
+type KeyStatsRecipe struct {
+	// Unique ID for the recipe
+	ID int
+	// The Dataset ID the recipe allies to.
+	DatasetID string
+	// The Dataset Edition the recipe applies to.
+	DatasetEdition string
+	// A Cantabular query template to execute for this recipe.
+	CantabularQuery string
+	// The Key Stat type the query results represent to i.e. Resident Population
+	StatType int
+	// The Geography types this recipe applies to.
+	Geographies []GeographyType
+}
+
+type GeographyType struct {
+	// ID is an internal ID to uniquely identify a geography
+	ID int
+	// Code is the hierarchy code assigned to this geography type.
+	Code string
+	// The display name of the geography.
+	Name string
+}
